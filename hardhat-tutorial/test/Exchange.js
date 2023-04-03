@@ -203,6 +203,7 @@ describe("DEX", function () {
 
       expect(dexCDBalance2).to.be.lessThanOrEqual(dexCDBalance.sub(amountOfTokens));
       expect(dexEthBalance2).to.be.greaterThanOrEqual(dexEthBalance.add(swapAmountWei));
+
     });
 
     it("CD 2 Eth", async function () {

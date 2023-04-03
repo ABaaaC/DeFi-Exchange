@@ -95,6 +95,7 @@ export default function Home() {
       console.error(err);
       setLoading(false);
       setSwapAmount("");
+
     }
   }
 
@@ -104,11 +105,13 @@ export default function Home() {
  */
   const _getAmountOfTokensReceivedFromSwap = async (_swapAmount) => {
     try {
-      const swapAmountWei = utils.parseEther(_swapAmount.toString());
-      if (!swapAmountWei.eq(zero)) {
+      const _swapAmountWei = utils.parseEther(_swapAmount.toString());
+      if (!_swapAmountWei.eq(zero)) {
         const provider = await getProviderOrSigner(false);
-        const amountOfTokens = await getAmountOfTokenReceivedFromSwap(swapAmountWei, provider, ethSelected, etherBalance, reservedCD);
+        const amountOfTokens = await getAmountOfTokenReceivedFromSwap(_swapAmountWei, provider, ethSelected, etherBalance, reservedCD);
         setTokenToBeReceivedAfterSwap(amountOfTokens);
+      } else {
+        setTokenToBeReceivedAfterSwap(zero);
       }
 
     } catch (err) {
@@ -294,6 +297,7 @@ export default function Home() {
       return <button className={styles.button}>Loading...</button>;
     }
     let renderTab;
+    
     if (liquidityTab) {
       renderTab = renderLiquidity;
     } else {
@@ -405,6 +409,8 @@ export default function Home() {
   }
 
   function renderSwap() {
+    console.log("ethSelected: ", ethSelected);
+
     return (
       <div>
         <div>
@@ -422,6 +428,7 @@ export default function Home() {
             className={styles.select}
             name="dropdown"
             id="dropdown"
+            value={ethSelected ? "eth" : "cryptoDevToken"}
             onChange={async (e) => {
               setEthSelected(!ethSelected);
               await _getAmountOfTokensReceivedFromSwap(0);

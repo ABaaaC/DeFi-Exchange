@@ -62,10 +62,13 @@ export const swapTokens = async (
         let tx;
 
         if (ethSelected) {
+            console.log('ethToCryptoDevToken');
             tx = await exchangeContract.ethToCryptoDevToken(tokenToBeReceivedAfterSwap, {value: swapAmountWei});
         } else {
+            console.log('cryptoDevTokenToEth');
             tx = await tokenContract.approve(EXCHANGE_CONTRACT_ADDRESS, swapAmountWei.toString());
             await tx.wait();
+            console.log('approved');
 
             tx = await exchangeContract.cryptoDevTokenToEth(swapAmountWei, tokenToBeReceivedAfterSwap);
         }
