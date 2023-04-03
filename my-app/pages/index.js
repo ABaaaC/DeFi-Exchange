@@ -247,7 +247,8 @@ export default function Home() {
     }
 
     if (needSigner) {
-      return web3Provider.getSigner();
+      const signer = web3Provider.getSigner();
+      return signer;
     }
     return web3Provider;
   }
@@ -409,8 +410,6 @@ export default function Home() {
   }
 
   function renderSwap() {
-    console.log("ethSelected: ", ethSelected);
-
     return (
       <div>
         <div>
